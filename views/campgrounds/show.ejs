@@ -1,22 +1,33 @@
 <% layout("layouts/boilerplate")%>
-    <h1>
-        <%=camp.title %>
-    </h1>
-    <img src="<%= camp.image %>" alt="camping image">
-    <h2>
-        <%= camp.location %>
-    </h2>
-    <strong>
-        $<%= camp.price %> per Night
-    </strong>
-    <p>
-        <%= camp.description %>
-    </p>
-
-    <footer>
-        <a href="/campgrounds/<%= camp.id %>/edit">Edit This Campground</a>
-
-        <form action="/campgrounds/<%= camp.id %>?_method=DELETE" method="POST">
-            <button>DELETE THIS CAMPGROUND</button>
-        </form><a href="/campgrounds">All Campgrounds</a>
-    </footer>
+    <div class="row mb-3">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <img src="<%= camp.image %>" class="card-img-top" alt="camp image">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%=camp.title %>
+                    </h5>
+                    <p class="card-text">
+                        <%= camp.description %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">$<%= camp.price %> per Night</li>
+                    <li class="list-group-item text-muted">
+                        <%= camp.location %>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a href="/campgrounds/<%= camp.id %>/edit" class="btn btn-info">Edit This Campground</a>
+                    <form class="d-inline" action="/campgrounds/<%= camp.id %>?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete This Campground</button>
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    <p>
+                        <%= (Math.floor(Math.random() * 100))%> days ago
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
