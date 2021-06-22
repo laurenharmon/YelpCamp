@@ -13,6 +13,9 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("database connected");
 });
+//EJS Mate
+const ejsEngine = require("ejs-mate");
+app.engine("ejs", ejsEngine);
 //Path and Views Settings
 const path = require("path");
 app.set("view engine", "ejs");
