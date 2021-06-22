@@ -2,14 +2,21 @@
     <h1>
         <%=camp.title %>
     </h1>
+    <img src="<%= camp.image %>" alt="camping image">
     <h2>
         <%= camp.location %>
     </h2>
+    <strong>
+        $<%= camp.price %> per Night
+    </strong>
+    <p>
+        <%= camp.description %>
+    </p>
 
     <footer>
         <a href="/campgrounds/<%= camp.id %>/edit">Edit This Campground</a>
-        <a href="/campgrounds">All Campgrounds</a>
+
         <form action="/campgrounds/<%= camp.id %>?_method=DELETE" method="POST">
             <button>DELETE THIS CAMPGROUND</button>
-        </form>
+        </form><a href="/campgrounds">All Campgrounds</a>
     </footer>
