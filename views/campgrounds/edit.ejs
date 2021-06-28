@@ -2,26 +2,26 @@
     <div class="row">
         <h1 class="text-center">New Campground</h1>
         <div class="col-6 offset-3">
-            <form action="/campgrounds/<%= camp.id %>?_method=PUT" method="POST">
+            <form action="/campgrounds/<%= camp.id %>?_method=PUT" method="POST" novalidate class="validated-form">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title: </label>
                     <input value="<%= camp.title %>" class="form-control" type="text" name="campground[title]"
-                        id="title">
+                        id="title" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="location">Location: </label>
                     <input value="<%= camp.location %>" class="form-control" type="text" name="campground[location]"
-                        id="location">
+                        id="location" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="image">Image Url: </label>
                     <input value="<%= camp.image %>" class="form-control" type="text" name="campground[image]"
-                        id="image">
+                        id="image" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="description">Description: </label>
-                    <textarea class="form-control" type="text" name="campground[description]" id="description">
+                    <textarea class="form-control" type="text" name="campground[description]" id="description" required>
                         <%= camp.description %>
                     </textarea>
                 </div>
@@ -30,7 +30,7 @@
                     <div class="input-group">
                         <span class="input-group-text" id="price-label">$</span>
                         <input value="<%= camp.price %>" type="text" class="form-control" placeholder="0.00"
-                            name="campground[price]" aria-describedby="price-label">
+                            name="campground[price]" aria-describedby="price-label" required>
                     </div>
                 </div>
                 <div class="mb-3">

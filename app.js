@@ -20,14 +20,16 @@ app.engine("ejs", ejsEngine);
 const path = require("path");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-//Parse Request Body
+//Parse Request Body Middleware
 app.use(express.urlencoded({ extended: true }));
-//Allow for Method Overrides
+//Allow for Method Overrides & Middleware
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
+//utilities
+const catchAsync = require("./utilities/catchAsync");
 //Models
 const Campground = require("./models/campground");
-///////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.listen(3000, () => {
     console.log("Good to go!");
 })
@@ -38,51 +40,56 @@ app.get("/", (req, res) => {
 })
 
 //CAMPGROUND INDEX
-app.get("/campgrounds", async (req, res) => {
+app.get("/campgrounds", catchAsync(async (req, res) => {
     const campgrounds = await Campground.find({});
     res.render("campgrounds/index", { campgrounds });
-})
+}))
 
 //CAMPGROUND CREATE
 app.get("/campgrounds/new", (req, res) => {
     res.render("campgrounds/new");
 })
 
-app.post("/campgrounds", async (req, res) => {
+app.post("/campgrounds", catchAsync(async (req, res, next) => {
     const newCamp = new Campground(req.body.campground);
     await newCamp.save();
     res.redirect(`/campgrounds/${newCamp.id}`);
-})
+}))
 
 //CAMPGROUND READ
-app.get("/campgrounds/:id", async (req, res) => {
+app.get("/campgrounds/:id", catchAsync(async (req, res) => {
     const { id } = req.params;
     const camp = await Campground.findById(id);
     res.render("campgrounds/show", { camp })
-})
+}))
 
 
 //CAMPGROUND UPDATE
-app.get("/campgrounds/:id/edit", async (req, res) => {
+app.get("/campgrounds/:id/edit", catchAsync(async (req, res) => {
     const { id } = req.params;
     const camp = await Campground.findById(id);
     res.render("campgrounds/edit", { camp })
-})
+}))
 
-app.put("/campgrounds/:id", async (req, res) => {
+app.put("/campgrounds/:id", catchAsync(async (req, res) => {
     const { id } = req.params;
     const camp = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
     res.redirect(`/campgrounds/${camp.id}`);
-})
+}))
 
 //CAMPGROUND DELETE
-app.delete("/campgrounds/:id", async (req, res) => {
+app.delete("/campgrounds/:id", catchAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
     res.redirect("/campgrounds");
-})
+}))
 
 //404
 app.use((req, res) => {
     res.status(404).send("No page found");
+})
+
+//ERROR
+app.use((err, req, res, next) => {
+    res.send("Whoops! Something went wrong.");
 })
