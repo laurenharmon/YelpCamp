@@ -20,6 +20,8 @@ app.engine("ejs", ejsEngine);
 const path = require("path");
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+//Joi
+const { campValidationSchema } = require("./schemas.js");
 //Parse Request Body Middleware
 app.use(express.urlencoded({ extended: true }));
 //Allow for Method Overrides & Middleware
@@ -30,6 +32,16 @@ const catchAsync = require("./utilities/catchAsync");
 const ExpressError = require("./utilities/ExpressError");
 //Models
 const Campground = require("./models/campground");
+
+const validateCamp = (req, res, next) => {
+    const { error } = campValidationSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(", ");
+        throw new ExpressError(400, msg);
+    } else {
+        next();
+    }
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 app.listen(3000, () => {
     console.log("Good to go!");
@@ -51,8 +63,8 @@ app.get("/campgrounds/new", (req, res) => {
     res.render("campgrounds/new");
 })
 
-app.post("/campgrounds", catchAsync(async (req, res, next) => {
-    if (!req.body.campground) throw new ExpressError(400, "Invalid Campground Data");
+app.post("/campgrounds", validateCamp, catchAsync(async (req, res, next) => {
+
     const newCamp = new Campground(req.body.campground);
     await newCamp.save();
     res.redirect(`/campgrounds/${newCamp.id}`);
@@ -73,7 +85,7 @@ app.get("/campgrounds/:id/edit", catchAsync(async (req, res) => {
     res.render("campgrounds/edit", { camp })
 }))
 
-app.put("/campgrounds/:id", catchAsync(async (req, res) => {
+app.put("/campgrounds/:id", validateCamp, catchAsync(async (req, res) => {
     const { id } = req.params;
     const camp = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
     res.redirect(`/campgrounds/${camp.id}`);
