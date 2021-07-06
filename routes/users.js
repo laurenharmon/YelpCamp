@@ -10,12 +10,16 @@ router.get("/register", (req, res) => {
 })
 
 router.post("/register", catchAsync(async (req, res, next) => {
-    const { username, email, password } = req.body;
-    const user = new User({ email, username });
-    const registered = await User.register(user, password);
-    console.log(registered);
-    req.flash("success", "Registration Successful");
-    res.redirect("/login");
+    try {
+        const { username, email, password } = req.body;
+        const user = new User({ email, username });
+        const registered = await User.register(user, password);
+        req.flash("success", "Registration Successful");
+        res.redirect("/login");
+    } catch (e) {
+        req.flash("error", e.message);
+        res.redirect("register");
+    }
 }))
 
 //LOGIN
