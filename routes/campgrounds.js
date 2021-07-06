@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Campground = require("../models/campground");
-const Review = require("../models/review");
+// const Review = require("../models/review");
 const catchAsync = require("../utilities/catchAsync");
 const ExpressError = require("../utilities/ExpressError");
 const { campValidationSchema } = require("../schemas.js");
