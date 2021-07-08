@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const campgrounds = require("../controllers/campgrounds");
-const Campground = require("../models/campground");
 const catchAsync = require("../utilities/catchAsync");
 const { isLoggedIn, isAuthor, validateCamp } = require("../middleware");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 
 //Index and New Camp Post
 router.route("/")
