@@ -1,6 +1,7 @@
 <% layout("layouts/boilerplate")%>
     <link rel="stylesheet" type="text/css" href="/stylesheets/rating.css">
 
+
     <div class="row mb-3">
         <% if(signedInUser) { %>
             <div class="col-md-6">
@@ -63,6 +64,9 @@
 
                     </div>
                     <div class="col-md-6">
+                        <!-- MAP -->
+                        <div id='map' style='border: 1px solid black; width: 400px; height: 300px;'></div>
+
                         <% if(signedInUser) {%>
 
                             <form action="/campgrounds/<%= camp.id %>/reviews" method="POST" class="my-2 validated-form"
@@ -144,3 +148,18 @@
     </div>
 
     </div>
+    <script>
+        mapboxgl.accessToken = "<%-process.env.MAPBOX_TOKEN%>";
+        const pinpoint = "<%= camp.geometry.coordinates %>";
+
+        const map = new mapboxgl.Map({
+            container: 'map', // container ID
+            style: 'mapbox://styles/mapbox/streets-v11', // style URL
+            center: [<%= camp.geometry.coordinates %>], // starting position [lng, lat]
+            zoom: 11 // starting zoom
+        });
+
+        const marker = new mapboxgl.Marker()
+            .setLngLat([<%= camp.geometry.coordinates %>])
+            .addTo(map);
+    </script>
