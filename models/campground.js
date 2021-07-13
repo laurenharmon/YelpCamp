@@ -5,11 +5,12 @@ const Review = require("./review");
 const ImageSchema = new Schema({
     url: String,
     filename: String
-})
+});
 ImageSchema.virtual("thumbnail").get(function () {
     return this.url.replace("/upload", "/upload/w_300");
-})
+});
 
+const options = { toJSON: { virtuals: true } };
 const CampgroundSchema = new Schema({
     title: String,
     images: [ImageSchema],
@@ -37,7 +38,7 @@ const CampgroundSchema = new Schema({
             ref: "Review"
         }
     ]
-});
+}, options);
 
 //all reviews associated with a campground get deleted with campground
 CampgroundSchema.post("findOneAndDelete", async function (doc) {
@@ -48,6 +49,12 @@ CampgroundSchema.post("findOneAndDelete", async function (doc) {
             }
         })
     }
+});
+
+CampgroundSchema.virtual("properties.popUpInfo").get(function () {
+        const response = `<strong><a href="/campgrounds/${this._id}">${this.title}</a></strong>
+        <p>$${this.price} per night</p>`;
+        return response;  
 });
 
 module.exports = mongoose.model("Campground", CampgroundSchema);

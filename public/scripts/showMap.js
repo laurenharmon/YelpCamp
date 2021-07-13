@@ -10,7 +10,7 @@ const map = new mapboxgl.Map({
 
 var popup = new mapboxgl.Popup({ offset: 25 })
     .setLngLat(pinpoint)
-    .setHTML("<h6> <%=camp.title%> </h6>");
+    .setHTML(`<h6> ${title} </h6>`);
 
 const marker = new mapboxgl.Marker()
     .setLngLat(pinpoint)
