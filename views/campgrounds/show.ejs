@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-md-6">
                         <!-- MAP -->
-                        <div id='map' style='border: 1px solid black; width: 400px; height: 300px;'></div>
+                        <div id='map' style='width: 100%; height: 300px;'></div>
 
                         <% if(signedInUser) {%>
 
@@ -149,17 +149,8 @@
 
     </div>
     <script>
-        mapboxgl.accessToken = "<%-process.env.MAPBOX_TOKEN%>";
-        const pinpoint = "<%= camp.geometry.coordinates %>";
-
-        const map = new mapboxgl.Map({
-            container: 'map', // container ID
-            style: 'mapbox://styles/mapbox/streets-v11', // style URL
-            center: [<%= camp.geometry.coordinates %>], // starting position [lng, lat]
-            zoom: 11 // starting zoom
-        });
-
-        const marker = new mapboxgl.Marker()
-            .setLngLat([<%= camp.geometry.coordinates %>])
-            .addTo(map);
+        const mapToken = "<%-process.env.MAPBOX_TOKEN%>";
+        const pinpoint = [<%= camp.geometry.coordinates %>];
     </script>
+
+    <script src="/scripts/showMap.js"></script>
