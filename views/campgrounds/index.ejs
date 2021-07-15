@@ -5,20 +5,17 @@
         <div class="card mb-3">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="row align-items-center p-1">
+                    <div class="row mx-auto p-1">
+
                         <% if(camp.images.length) {%>
                             <img src="<%= camp.images[0].url %>" alt="campground image" class="img-fluid mb-2">
                             <% } else { %>
                                 <img src="https://res.cloudinary.com/de7wrrblm/image/upload/v1626201478/YelpCamp/dyqhuguwqbh5i3rsk0dl.jpg"
                                     alt="campground image" class="img-fluid mb-2">
                                 <% } %>
-                    </div>
-                    <div class="row align-items-center">
-                        <div class="col-md-6 offset-3 mb-2">
-                            <a href="/campgrounds/<%= camp.id %>"
-                                class="btn btn-outline-primary justify-content-center">View <%= camp.title %>
-                            </a>
-                        </div>
+                                    <a href="/campgrounds/<%= camp.id %>" class="btn btn-outline-info mx-auto my-2"
+                                        style="width: 200px;">View <%= camp.title %>
+                                    </a>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -41,6 +38,6 @@
         <% } %>
             <script>
                 const mapToken = "<%-process.env.MAPBOX_TOKEN%>";
-                const campgrounds = {features: <%- JSON.stringify(campgrounds)%> };
+                const campgrounds = { features: <% - JSON.stringify(campgrounds) %> };
             </script>
             <script src="/scripts/indexMap.js"></script>
