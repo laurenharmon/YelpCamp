@@ -10,9 +10,11 @@ const ejsEngine = require("ejs-mate");
 const path = require("path");
 const session = require("express-session");
 const methodOverride = require("method-override");
+const mongoSanitize = require("express-mongo-sanitize");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+
 
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
@@ -57,6 +59,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use(methodOverride("_method"));
+app.use(mongoSanitize);
 
 app.use(flash());
 app.use((req, res, next) => {
