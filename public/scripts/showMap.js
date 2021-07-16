@@ -8,6 +8,8 @@ const map = new mapboxgl.Map({
     zoom: 11 // starting zoom
 });
 
+
+
 var popup = new mapboxgl.Popup({ offset: 25 })
     .setLngLat(pinpoint)
     .setHTML(`<h6> ${title} </h6>`);
@@ -16,3 +18,5 @@ const marker = new mapboxgl.Marker()
     .setLngLat(pinpoint)
     .setPopup(popup)
     .addTo(map);
+
+map.addControl(new mapboxgl.NavigationControl(), "bottom-left");

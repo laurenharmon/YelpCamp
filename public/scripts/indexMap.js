@@ -21,6 +21,8 @@ map.on('load', function () {
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
     });
 
+    map.addControl(new mapboxgl.NavigationControl(), "bottom-left");
+
     map.addLayer({
         id: 'clusters',
         type: 'circle',
