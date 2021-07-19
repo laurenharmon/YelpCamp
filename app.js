@@ -140,9 +140,9 @@ app.use("/campgrounds/:id/reviews", reviewRoutes);
 
 
 ////////////////////////////////////////////////////////////////
-
-app.listen(3000, () => {
-    console.log("Good to go!");
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`On Port ${port}`);
 })
 
 //HOME
