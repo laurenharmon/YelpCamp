@@ -47,22 +47,22 @@
                                 </ul>
                                 <% if(signedInUser && camp.author.equals(signedInUser)) { %>
                                     <div class="card-body">
-                                        
-                                            
 
-                                                <a href="/campgrounds/<%= camp.id %>/edit" class="btn btn-info">Edit
-                                                    This
-                                                    Campground</a>
-                                           
-                                                <form class="d-inline"
-                                                    action="/campgrounds/<%= camp.id %>?_method=DELETE" method="POST">
 
-                                                    <button class="btn btn-outline-danger">Delete This
-                                                        Campground</button>
-                                                </form>
-                                            </div>
-                                 
-                                   
+
+                                        <a href="/campgrounds/<%= camp.id %>/edit" class="btn btn-info">Edit
+                                            This
+                                            Campground</a>
+
+                                        <form class="d-inline" action="/campgrounds/<%= camp.id %>?_method=DELETE"
+                                            method="POST">
+
+                                            <button class="btn btn-outline-danger">Delete This
+                                                Campground</button>
+                                        </form>
+                                    </div>
+
+
 
                                     <% } %>
                                         <div class="card-footer text-muted">
@@ -118,44 +118,54 @@
                                     </form>
                                 </div>
                             </div>
-                            <% } %>
-                                <% if(camp.reviews.length) { %>
+                            <% } else { %>
+                                <div class="card my-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title text-center">
+                                            <a href="/login">Sign In</a>
+                                            To Leave a Review
+                                        </h5>
+                                    </div>
+                                </div>
+                                <% } %>
+                                    <% if(camp.reviews.length) { %>
 
-                                    <hr>
-                                    <h4 class="text-center mb-3">Reviews</h4>
+                                        <hr>
+                                        <h4 class="text-center mb-3">Reviews</h4>
 
-                                    <% for(let review of camp.reviews) { %>
-                                        <div class="card mb-2">
-                                            <div class="card-body">
-                                                <p class="card-title starability-result"
-                                                    data-rating="<%= review.rating %>">
-                                                    Rated: <%= review.rating %>
-                                                </p>
+                                        <% for(let review of camp.reviews) { %>
+                                            <div class="card mb-2">
+                                                <div class="card-body">
+                                                    <p class="card-title starability-result"
+                                                        data-rating="<%= review.rating %>">
+                                                        Rated: <%= review.rating %>
+                                                    </p>
 
-                                                <% if(review.author) { %>
-                                                    <h6 class="card-subtitle mb-2 text-muted">
-                                                        - <%= review.author.username %>
-                                                    </h6>
-                                                    <% } %>
-                                                        <p class="card-text">
+                                                    <% if(review.author) { %>
+                                                        <h6 class="card-subtitle mb-2 text-muted">
+                                                            - <%= review.author.username %>
+                                                        </h6>
+                                                        <% } %>
+                                                            <p class="card-text">
 
-                                                            <%= review.body %>
-                                                        </p>
+                                                                <%= review.body %>
+                                                            </p>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <% if(review.author && signedInUser && review.author.equals(signedInUser)) { %>
-                                            <div class="card-footer">
+                                            <% if(review.author && signedInUser && review.author.equals(signedInUser)) {
+                                                %>
+                                                <div class="card-footer">
 
-                                                <form
-                                                    action="/campgrounds/<%= camp.id %>/reviews/<%= review.id %>?_method=DELETE"
-                                                    method="POST">
-                                                    <div class="d-grid gap-2 col-9 mx-auto">
-                                                        <button class="btn btn-sm btn-outline-danger">Delete
-                                                            This
-                                                            Review</button>
-                                                </form>
-                                            </div>
+                                                    <form
+                                                        action="/campgrounds/<%= camp.id %>/reviews/<%= review.id %>?_method=DELETE"
+                                                        method="POST">
+                                                        <div class="d-grid gap-2 col-9 mx-auto">
+                                                            <button class="btn btn-sm btn-outline-danger">Delete
+                                                                This
+                                                                Review</button>
+                                                    </form>
+                                                </div>
                     </div>
                     <% } %>
 
