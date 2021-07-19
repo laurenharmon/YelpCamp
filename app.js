@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require("dotenv").config();
 }
+
 const express = require("express");
 const app = express();
 const ExpressError = require("./utilities/ExpressError");
@@ -13,12 +14,14 @@ const methodOverride = require("method-override");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
+const helmet = require("helmet");
 
 
 const campgroundRoutes = require("./routes/campgrounds");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
-
+// const dbUrl = process.env.DB_URL;
+// "mongodb://localhost:27017/yelp-camp"
 mongoose.connect("mongodb://localhost:27017/yelp-camp", {
     useNewUrlParser: true,
     useCreateIndex: true,
@@ -39,6 +42,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
 const sessionConfig = {
+    name: "current-session",
     secret: "secretkey",
     resave: false,
     saveUninitialized: true,
@@ -59,6 +63,55 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(methodOverride("_method"));
 
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/",
+    "https://api.titles.mapbox.com/",
+    "https://api.mapbox.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudfare.com/",
+    "https://cdn.jsdelivr.net/",
+];
+const styleSrcUrls = [
+    "https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css",
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://api.mapbox.com/",
+    "https://api.titles.mapbox.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+];
+const connectSrcUrls = [
+    "https://api.mapbox.com/",
+    "https://a.titles.mapbox.com/",
+    "https://b.titles.mapbox.com/",
+    "https://events.mapbox.com/",
+];
+const fontSrcUrls = [];
+
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'self'", "'unsafe-inline'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/de7wrrblm/",
+                "https://images.unsplash.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        }
+    })
+);
+
+
+
 
 app.use(flash());
 app.use((req, res, next) => {
@@ -71,8 +124,6 @@ app.use((req, res, next) => {
 app.use("/", userRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/reviews", reviewRoutes);
-
-// app.use(mongoSanitize);
 
 
 ////////////////////////////////////////////////////////////////

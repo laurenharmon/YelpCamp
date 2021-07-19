@@ -1,5 +1,4 @@
 const User = require("../models/user");
-const sanitize = require("mongo-sanitize");
 
 //REGISTER
 module.exports.renderRegisterForm = (req, res) => {
