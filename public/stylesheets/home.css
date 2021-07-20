@@ -16,6 +16,7 @@ body {
 .nav-link {
     padding: 0.25rem 0;
     font-weight: 700;
+    letter-spacing: .05rem;
     color: rgba(255,255,255,0.5);
     margin-left: 1rem;
     border-bottom: 0.25rem solid transparent;
@@ -31,8 +32,36 @@ body {
     border-bottom-color: white;
 }
 
-.btn-outline-secondary, .btn-outline-secondary:hover {
+.btn-outline-secondary {
     color: black;
     font-weight: 600;
     text-shadow: none;
+    background-color: white;
+}
+
+.btn-outline-secondary:hover {
+    background-color: (255,255,255,.7);
+}
+
+@media screen and (max-width: 447px) {
+    .cover-container {
+        max-width: 90vw;
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin-bottom: 2rem;
+        letter-spacing: .1rem;
+
+    }
+
+    .nav-link {
+        font-weight: 400;
+        border-bottom: 0.15rem solid transparent;
+    }
+
+    p {
+        margin-bottom: 2rem;
+        line-height: 2.3rem;
+    }
 }

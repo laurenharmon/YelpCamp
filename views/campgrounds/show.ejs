@@ -1,6 +1,7 @@
 <% layout("layouts/boilerplate")%>
     <link rel="stylesheet" type="text/css" href="/stylesheets/rating.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/map.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/show.css">
 
 
     <div class="row mb-3">
@@ -46,11 +47,11 @@
                                     </li>
                                 </ul>
                                 <% if(signedInUser && camp.author.equals(signedInUser)) { %>
-                                    <div class="card-body">
+                                    <div class="card-body text-center">
 
 
 
-                                        <a href="/campgrounds/<%= camp.id %>/edit" class="btn btn-info">Edit
+                                        <a href="/campgrounds/<%= camp.id %>/edit" class="btn btn-info sm-bottom">Edit
                                             This
                                             Campground</a>
 
@@ -67,8 +68,7 @@
                                     <% } %>
                                         <div class="card-footer text-muted">
                                             <p>
-                                                Created <%= (Math.floor(Math.random() * 100))%> days ago by <%=
-                                                        camp.author.username %>
+                                                Created by <%= camp.author.username %>
                                             </p>
                                         </div>
                             </div>
