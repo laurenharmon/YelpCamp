@@ -58,10 +58,15 @@ body {
     .nav-link {
         font-weight: 400;
         border-bottom: 0.15rem solid transparent;
+        align-self: flex-end;
     }
 
     p {
         margin-bottom: 2rem;
         line-height: 2.3rem;
+    }
+
+    .btn-outline-secondary {
+        margin-bottom: 2rem;
     }
 }
