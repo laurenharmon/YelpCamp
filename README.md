@@ -2,7 +2,7 @@
 
 You can visit the site [here!](https://ycamplh.herokuapp.com)
 
-A fully responsive full stack web application built using Node.js, Express, and MongoDB Atlas. 
+A fully responsive full stack web application built using Node.js, Express, Bootstrap 5, and MongoDB Atlas. 
 A dummy campground review website that uses authentication and validation for users and forms. 
 
 Users can register and log in to create new campgrounds, review other campgrounds, or just peruse the site.
